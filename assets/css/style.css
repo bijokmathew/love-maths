@@ -35,7 +35,7 @@ body {
     font-size: 2rem;
     width: 50%;
     margin: auto;
-    padding: 50px o;
+    padding: 50px 0;
 }
 
 .question-area span {
@@ -107,6 +107,13 @@ body {
     margin: 0 30px;
     transition: all 0.5s;
 }
+.btn-big::after {
+    content: attr(data-type);
+    font-size: 1rem;
+    color: #445361;
+    position: relative;
+    left: -0.5em;
+}
 
 .btn-blue {
     color: blue;
@@ -165,7 +172,8 @@ body {
 }
 
 /* media queries */
-@media(max-width : 414px) {
+
+@media (max-width: 414px) {
     .control-area {
         width: 100%;
     }
@@ -178,12 +186,10 @@ body {
         height: 50px;
         font-size: 1.5rem;
     }
-
     .btn-big::after {
         font-size: 0.6rem;
         left: -0.7rem;
     }
-
     .question-area {
         width: 100%;
         padding: 10% 0;
@@ -211,7 +217,7 @@ body {
     }
 
     .scores {
-        margin: 0.5rem auto;
+        margin: 0.5em auto;
         display: block;
         padding: 5px;
     }
@@ -221,7 +227,7 @@ body {
     }
 }
 
-@media (max-width : 320px) {
+@media (max-width: 320px) {
     .game-area{
         height: 70vh;
     }

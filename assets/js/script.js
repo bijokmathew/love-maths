@@ -1,3 +1,4 @@
+/* Get button element and add event listener to them */
 function runGame(){
 
 }
