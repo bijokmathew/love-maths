@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
     }
-    document.getElementById("answer-box").addEventListener("keydown",function(event){
-        if( event.key === 'Enter'){
+    document.getElementById("answer-box").addEventListener("keydown", function (event) {
+        if (event.key === 'Enter') {
             checkAnswer();
         }
     });
@@ -22,25 +22,37 @@ document.addEventListener("DOMContentLoaded", function () {
  * The maim game loop is called when the script is first loaded 
  * and after that user answer has been processed
  */
+
 function runGame(gameType) {
     let userInput = document.getElementById("answer-box");
     userInput.focus();
-    userInput.innerText=''
+    userInput.innerText = ''
     // create two random numbers between 1 and 25
     let num1 = Math.floor(Math.random() * 25) + 1;
     let num2 = Math.floor(Math.random() * 25) + 1;
     if (gameType === "addition") {
         displayAditionQuestion(num1, num2);
     } else if (gameType === "subtract") {
-        displaySubstrationQuestion(num1,num2);
+        displaySubstrationQuestion(num1, num2);
     } else if (gameType === "multiply") {
-        displayMultiplicationQuestion(num1,num2);
+        displayMultiplicationQuestion(num1, num2);
     } else if (gameType === "division") {
-        displayDivisionQuestion(num1,num2);
+        displayDivisionQuestion(num1, num2);
     } else {
         alert(`Unknow game type :${gameType}`);
         throw `Unknow game type : ${gameType}.Aborting!`;
     }
+}
+/**
+ * update the DOM with value1, value2 and operator
+ * @param {*} value1 
+ * @param {*} value2 
+ * @param {*} operator 
+ */
+function updateDOM(operand1, operand2, operator) {
+    document.getElementById('oprand1').textContent = operand1;
+    document.getElementById('oprand2').textContent = operand2;
+    document.getElementById('operator').textContent = operator;
 }
 /**
  * Get the two random numbers and create 
@@ -49,27 +61,46 @@ function runGame(gameType) {
  * @param {*} operand2 
  */
 function displayAditionQuestion(operand1, operand2) {
-    document.getElementById('oprand1').textContent = operand1;
-    document.getElementById('oprand2').textContent = operand2;
-    document.getElementById('operator').textContent = '+';
+    updateDOM(operand1, operand2, "+")
 }
-
-function displaySubstrationQuestion(operand1,operand2) {
+/**
+ * Get the two random numbers and create 
+ * substraction question to user
+ * @param {*} operand1 
+ * @param {*} operand2 
+ */
+function displaySubstrationQuestion(operand1, operand2) {
+    operand1 = operand1 > operand2 ? operand1 : operand2;
+    operand2 = operand1 > operand2 ? operand2 : operand1;
+    updateDOM(operand1, operand2, "-")
 
 }
-
-function displayMultiplicationQuestion(operand1,operand2) {
-
+/**
+ * Get the two random numbers and create 
+ * multiplication question to user
+ * @param {*} operand1 
+ * @param {*} operand2 
+ */
+function displayMultiplicationQuestion(operand1, operand2) {
+    updateDOM(operand1, operand2, "x")
 }
-
-function displayDivisionQuestion(operand1,operand2) {
+/**
+ * Get the two random numbers and create 
+ * division question to user
+ * @param {*} operand1 
+ * @param {*} operand2 
+ */
+function displayDivisionQuestion(operand1, operand2) {
+    operand1 = operand2 == 0 ? operand2 : operand1;
+    operand2 = operand2 == 0 ? operand1 : operand2;
+    updateDOM(operand1, operand2, "/")
 
 }
 
 function checkAnswer() {
-    let userAnswer = parseInt( document.getElementById("answer-box").value );
+    let userAnswer = parseInt(document.getElementById("answer-box").value);
     let calculatedAnswer = calculateCorrectAnswer();
-    if( userAnswer === calculatedAnswer[0]){
+    if (userAnswer === calculatedAnswer[0]) {
         alert("Congrajulation your answer is correct")
         incrementScore();
     } else {
@@ -88,6 +119,12 @@ function calculateCorrectAnswer() {
     let operator = document.getElementById('operator').innerText;
     if (operator === '+') {
         return [oprand1 + oprand2, "addition"];
+    } else if (operator === '-') {
+        return [oprand1 - oprand2, "subtract"];
+    } else if (operator === 'x') {
+        return [oprand1 * oprand2, "multiply"];
+    } else if (operator === '/') {
+        return [oprand1 / oprand2, "division"];
     } else {
         alert(`Unimplemented operator ${operator}`);
         throw `Unimplemented operator ${operator}.Aborting!`;
